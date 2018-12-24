@@ -14,10 +14,7 @@ def input_to_index(user_input)
 end
 
 
-def move(board, actual_input, typedin = "X")
- 
- 	board[actual_input] = typedin
- end
+
 
 
 
@@ -25,59 +22,64 @@ def input_to_index(user_input)
 	actual_input = user_input.to_i - 1
 end
 
+def move(board, actual_input, typedin = "X")
+ 
+ 	board[actual_input] = typedin
+ end
 
- def valid_move?(board , index)
-	if board[index] == "X"  || board[index] == "O"
+ def valid_move?(board , actual_input)
+ 	
+	if board[actual_input] == "X"  || board[actual_input] == "O"
 		return false			
-	elsif index >= 0 && index <= 8
+	elsif actual_input >= 0 && actual_input <= 8
 		return true
-	elsif  index < 0 || index > 8
+	elsif actual_input < 0 || actual_input > 8
 		return false
+	
 	else
-			
-
-
-
-	#elsif board[index] == " " || board[index] == "X"
+	return false#elsif board[index] == " " || board[index] == "X"
 			#return nil
 
+		#return "Invalid entry, try again"
+end
+end
+# re-define your #position_taken? method here, so that you can use it in the #valid_move? method above.
+	def position_taken?(board, actual_input)
+ 		if board[actual_input] == " "
 		return false
 
-		
+		elsif board[actual_input] == ""
+		return false
+		elsif board[actual_input] == nil
+		return false
+		else
+		return true
+		puts "Position taken"
+		end
 	end
-end
-
-# re-define your #position_taken? method here, so that you can use it in the #valid_move? method above.
-def position_taken?(board, index)
- if board[index] == " "
-return false
-elsif board[index] == ""
-	return false
-elsif board[index] == nil
-	return false
-else
-	return true
-end
-	 end
 
 
 
 	 def turn(board)
- 	 
+ 			puts "Please enter 1-9:"
+ 			
+			user_input = gets.chomp
+ 		 actual_input = input_to_index(user_input)
 
- 	 puts "Please enter 1-9:"
- 	 
- 	loop do
-
-	user_input = gets.strip
- 	input_to_index(user_input)
-
-     
-	valid_move?(board, 0)
-	 	
- 	end
-   
- 	
  		
+	
+		if valid_move?(board,actual_input) == true
+		  move(board, actual_input)
+		display_board(board)
+		
+		else 
+		 turn(board)
+		
+	
+		#user_input = gets.strip
+		
+		end
  	
- end
+
+ 		
+	end
